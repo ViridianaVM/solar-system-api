@@ -6,15 +6,17 @@ from .models.planet import Planet
 
 planets_bp = Blueprint("planet", __name__, url_prefix="/planet")
 
-# @planet_bp.route("/planet", methods=["GET"])
-# def planet():
-#     my_beautiful_response_body = "Hello, World!"
-#     return my_beautiful_response_body
+@planets_bp.route("/planet", methods=["GET"])
+def planet():
+    planet = Planet.query.all()
+    my_beautiful_response_body = planet
+    return my_beautiful_response_body
 
-# @planet_bp.route("/planet/<id>", methods=["GET"])
-# def planet():
-#     my_beautiful_response_body = "Hello, World!"
-#     return my_beautiful_response_body
+@planets_bp.route("/planet/<id>", methods=["GET"])
+def planet():
+    planet = Planet.query.get(id)
+    my_beautiful_response_body = planet
+    return my_beautiful_response_body
 
 @planets_bp.route("", methods=["POST"])
 def planet():
