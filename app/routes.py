@@ -12,11 +12,6 @@ def get_all_planets():
     my_beautiful_response_body = planet
     return my_beautiful_response_body
 
-@planets_bp.route("/planet/<id>", methods=["GET"])
-def get_one_planet():
-    planet = Planet.query.get(id)
-    my_beautiful_response_body = planet
-    return my_beautiful_response_body
 
 @planets_bp.route("", methods=["POST"])
 def make_new_planet():
@@ -30,12 +25,18 @@ def make_new_planet():
     }, 201
     return my_beautiful_response_body
 
-@planets_bp.route("/<id>", methods=["GET", "PUT"])
+@planets_bp.route("/<id>", methods=["GET", "PUT", "DELETE"])
 def update_planet(id):
-    old_planet = Planet.query.get(id)
+    planet = Planet.query.get(id)
+
+    if not planet:
+        return {
+            "message": f"Planet with id {id} was not found",
+            "success": False,
+        }, 404
 
     if request.method == "GET":
-        return old_planet.to_json(), 200
+        return planet.to_json(), 200
 
     elif request.method == "PUT":
         from_data = request.get_json()
@@ -46,3 +47,13 @@ def update_planet(id):
         db.session.commit()
 
         return make_response(f"Planet #{planet.id} successfully updated"), 200
+
+    elif request.method == "DELETE":
+ 
+    #Delete that planet from database
+        db.session.delete(planet)
+        db.session.commit()
+        return {
+            "success": True,
+            "message": f"Book {planet.id} successfully deleted"
+        }, 200
