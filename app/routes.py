@@ -29,3 +29,20 @@ def planet():
         "message": f"Planet {new_planet.name} has been created"
     }, 201
     return my_beautiful_response_body
+
+@planets_bp.route("/<id>", methods=["GET", "PUT"])
+def update_planet(id):
+    old_planet = Planet.query.get(id)
+
+    if request.method == "GET":
+        return old_planet.to_json(), 200
+
+    elif request.method == "PUT":
+        from_data = request.get_json()
+
+        planet.name = from_data["name"]
+        planet.description = from_data["description"]
+
+        db.session.commit()
+
+        return make_response(f"Planet #{planet.id} successfully updated"), 200
