@@ -7,19 +7,19 @@ from .models.planet import Planet
 planets_bp = Blueprint("planet", __name__, url_prefix="/planet")
 
 @planets_bp.route("/planet", methods=["GET"])
-def planet():
+def get_all_planets():
     planet = Planet.query.all()
     my_beautiful_response_body = planet
     return my_beautiful_response_body
 
 @planets_bp.route("/planet/<id>", methods=["GET"])
-def planet():
+def get_one_planet():
     planet = Planet.query.get(id)
     my_beautiful_response_body = planet
     return my_beautiful_response_body
 
 @planets_bp.route("", methods=["POST"])
-def planet():
+def make_new_planet():
     req_body = request.get_json()
     new_planet = Planet(name = req_body["name"], description = req_body["description"])
     db.session.add(new_planet)
