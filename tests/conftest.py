@@ -31,3 +31,9 @@ def two_saved_planets(app):
     # db.session.add(mountain_book)
     db.session.commit()
 
+@pytest.fixture
+def new_planet(app):
+    return {
+        "name"="Terra", 
+        "description" = "A planet similar to Earth"
+        }

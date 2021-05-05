@@ -24,7 +24,7 @@ def test_temp_saved_two_books(client, two_saved_planets):
 
 def test_client_post(client):
 
-    response = client.post("/planets")
-    response_body = response.get_json(name="Terra", description= "A planet similar to Earth")
+    response = client.post("/planets", json = new_planet)
+    response_body = response.get_json()
 
     assert response.status_code == 201
