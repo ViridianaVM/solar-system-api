@@ -1,16 +1,20 @@
 from app import db
 from flask import Blueprint
 from flask import request, Blueprint, make_response
+from flask import jsonify
 from .models.planet import Planet
 
 
-planets_bp = Blueprint("planet", __name__, url_prefix="/planet")
+planets_bp = Blueprint("planets", __name__, url_prefix="/planets")
 
-@planets_bp.route("/planet", methods=["GET"])
+
+@planets_bp.route("", methods=["GET"], strict_slashes=False)
 def get_all_planets():
-    planet = Planet.query.all()
-    my_beautiful_response_body = planet
-    return my_beautiful_response_body
+    planets = Planet.query.all()
+    planets_response = []
+    for planet in planets:
+        planets_response.append(planet.to_json())
+    return jsonify(planets_response), 200
 
 
 @planets_bp.route("", methods=["POST"])
