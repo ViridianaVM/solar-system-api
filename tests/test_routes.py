@@ -22,9 +22,9 @@ def test_temp_saved_two_books(client, two_saved_planets):
 
     assert response.status_code == 200
 
-def test_client_post(client):
+def test_client_post(client, new_planet):
 
-    response = client.post("/planets", json = new_planet)
+    response = client.post("/planets", json=new_planet)
     response_body = response.get_json()
 
     assert response.status_code == 201

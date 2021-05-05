@@ -34,6 +34,6 @@ def two_saved_planets(app):
 @pytest.fixture
 def new_planet(app):
     return {
-        "name"="Terra", 
-        "description" = "A planet similar to Earth"
+        "name":"Terra", 
+        "description": "A planet similar to Earth"
         }
