@@ -53,7 +53,7 @@ def update_planet(id):
         return make_response(f"Planet #{planet.id} successfully updated"), 200
 
     elif request.method == "DELETE":
- 
+
     #Delete that planet from database
         db.session.delete(planet)
         db.session.commit()
